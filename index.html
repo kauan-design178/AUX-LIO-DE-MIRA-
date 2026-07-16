@@ -12,7 +12,6 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            /* Fundo roxo neon marcante com degradê */
             background: radial-gradient(circle, #25003f 0%, #0c0014 100%);
             color: white;
             margin: 0;
@@ -20,14 +19,12 @@
             box-sizing: border-box;
         }
 
-        /* Container principal */
         .menu-container {
             width: 100%;
             max-width: 360px;
             text-align: center;
         }
 
-        /* Painel de Funções com borda roxa brilhante */
         .hack-panel {
             background-color: rgba(30, 0, 50, 0.8);
             border: 1px solid #7b2cbf;
@@ -39,7 +36,7 @@
 
         .panel-title {
             font-size: 14px;
-            color: #d800ff; /* Título em rosa/roxo neon brilhante */
+            color: #d800ff;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             margin-bottom: 15px;
@@ -47,7 +44,6 @@
             text-shadow: 0 0 5px #d800ff;
         }
 
-        /* Alinhamento dos switches */
         .switch-group {
             display: flex;
             justify-content: space-between;
@@ -65,7 +61,6 @@
             color: #e0e0e0;
         }
 
-        /* Estilização do Switch */
         .switch {
             position: relative;
             display: inline-block;
@@ -103,7 +98,6 @@
             border-radius: 50%;
         }
 
-        /* Cor ativa do switch */
         input:checked + .slider {
             background-color: #d800ff;
             box-shadow: 0 0 8px #d800ff;
@@ -113,7 +107,6 @@
             transform: translateX(22px);
         }
 
-        /* Estilização dos Botões */
         h2 {
             font-size: 22px;
             margin-top: 10px;
@@ -127,7 +120,6 @@
             margin-bottom: 20px;
         }
 
-        /* Input de Senha */
         .pass-input {
             width: 100%;
             padding: 14px;
@@ -140,7 +132,6 @@
             margin-bottom: 15px;
             box-sizing: border-box;
             outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .pass-input:focus {
@@ -161,7 +152,6 @@
             cursor: pointer;
             text-decoration: none;
             margin-bottom: 12px;
-            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
             box-sizing: border-box;
             box-shadow: 0 0 5px rgba(123, 44, 191, 0.5);
         }
@@ -171,131 +161,162 @@
             box-shadow: 0 0 12px rgba(157, 78, 221, 0.8);
         }
 
-        .btn:active {
-            transform: scale(0.98);
-        }
-
         .btn-max {
             background-color: #5a189a;
-            box-shadow: 0 0 5px rgba(90, 24, 154, 0.5);
         }
 
-        .btn-max:hover {
-            background-color: #7b2cbf;
-            box-shadow: 0 0 12px rgba(123, 44, 191, 0.8);
-        }
-
-        /* Mensagem de Erro */
         .error-message {
             color: #ff0055;
             font-size: 13px;
-            font-weight: bold;
-            margin-top: -5px;
-            margin-bottom: 15px;
             display: none;
-            text-shadow: 0 0 5px rgba(255, 0, 85, 0.5);
         }
 
-        /* Estilo da assinatura */
         .credits {
             margin-top: 35px;
             font-size: 12px;
             color: #9d4edd;
             font-weight: bold;
             letter-spacing: 1px;
-            text-shadow: 0 0 8px rgba(157, 78, 221, 0.6);
-            text-transform: lowercase;
+        }
+
+        /* TELA DE LOADING DA INJEÇÃO */
+        #loading-screen {
+            display: none;
+            background: rgba(12, 0, 20, 0.95);
+            border: 2px solid #d800ff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 30px #d800ff;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            background-color: #222;
+            height: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid #7b2cbf;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #d800ff;
+            box-shadow: 0 0 10px #d800ff;
+            transition: width 0.1s linear;
+        }
+
+        #loading-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            color: #00ff00;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. TELA DE SENHA (LOGIN) -->
+    <!-- 1. TELA DE SENHA -->
     <div id="login-screen" class="menu-container">
         <h2>Acesso VIP</h2>
         <p>Insira a credencial para liberar o painel:</p>
-        
         <input type="password" id="password-field" class="pass-input" placeholder="Digite a senha...">
         <div id="error-msg" class="error-message">Senha incorreta! Tente novamente.</div>
-        
         <button class="btn" onclick="verifyPassword()">Entrar no Painel</button>
-        
         <div class="credits">dono:@kauan_henrique_oficial</div>
     </div>
 
-
-    <!-- 2. PAINEL DO JOGO (INICIALMENTE OCULTO) -->
+    <!-- 2. PAINEL PRINCIPAL -->
     <div id="main-panel" class="menu-container" style="display: none;">
-        
-        <!-- PAINEL DE FUNÇÕES (TOPO) -->
         <div class="hack-panel">
             <div class="panel-title">Configurações de Auxílio</div>
-            
-            <!-- Aim Bot -->
             <div class="switch-group">
                 <span class="switch-label">Aim Bot</span>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" id="aim-sync"><span class="slider"></span></label>
             </div>
-
-            <!-- No Recoil -->
             <div class="switch-group">
                 <span class="switch-label">No Recoil</span>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" id="recoil-sync"><span class="slider"></span></label>
             </div>
-
-            <!-- Anti Ban -->
             <div class="switch-group">
                 <span class="switch-label">Anti Ban</span>
-                <label class="switch">
-                    <input type="checkbox" checked>
-                    <span class="slider"></span>
-                </label>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
             </div>
         </div>
 
-        <!-- SEÇÃO DE INICIAR O JOGO -->
         <h2>Iniciar Free Fire</h2>
         <p>Altere as funções acima e abra o jogo diretamente por aqui:</p>
 
-        <a href="freefire://" class="btn">FF NORMAL</a>
-        <a href="freefiremax://" class="btn btn-max">FF MAX</a>
+        <button class="btn" onclick="startInfection('freefire://')">FF NORMAL</button>
+        <button class="btn btn-max" onclick="startInfection('freefiremax://')">FF MAX</button>
 
-        <!-- CRÉDITOS -->
         <div class="credits">dono:@kauan_henrique_oficial</div>
+    </div>
 
+    <!-- 3. TELA DE CARREGAMENTO SIMULADO -->
+    <div id="loading-screen" class="menu-container">
+        <h3 style="color: #d800ff; text-shadow: 0 0 5px #d800ff;">INJETANDO SCRIPTS</h3>
+        <div class="progress-bar-bg">
+            <div id="progress-fill" class="progress-bar-fill"></div>
+        </div>
+        <div id="loading-text">Inicializando logs...</div>
     </div>
 
     <script>
-        // Função para verificar a senha
         function verifyPassword() {
             const passwordInput = document.getElementById('password-field').value;
             const errorMsg = document.getElementById('error-msg');
-            
-            // ---> COLOQUE A SUA SENHA PREFERIDA AQUI: <---
-            const senhaCorreta = "KAUAN-KEY-123"; 
-
-            if (passwordInput === senhaCorreta) {
-                // Esconde a tela de login e mostra o painel principal
+            if (passwordInput === "123") {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-panel').style.display = 'block';
             } else {
-                // Mostra mensagem de erro se errar
                 errorMsg.style.display = 'block';
-                document.getElementById('password-field').value = ''; // Limpa o campo
+                document.getElementById('password-field').value = '';
             }
         }
 
-        // Permite entrar apertando a tecla "Enter" no teclado
+        // Função de simulação hacker
+        function startInfection(gameUrl) {
+            document.getElementById('main-panel').style.display = 'none';
+            document.getElementById('loading-screen').style.display = 'block';
+            
+            const fill = document.getElementById('progress-fill');
+            const text = document.getElementById('loading-text');
+            
+            let width = 0;
+            const checkAim = document.getElementById('aim-sync').checked;
+            const checkRecoil = document.getElementById('recoil-sync').checked;
+
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    text.innerHTML = "SINCRO COMPLETA! ABRINDO JOGO...";
+                    setTimeout(() => {
+                        window.location.href = gameUrl; // Abre o Free Fire
+                        // Reseta a tela caso o usuário volte para o navegador
+                        document.getElementById('loading-screen').style.display = 'none';
+                        document.getElementById('main-panel').style.display = 'block';
+                        fill.style.width = '0%';
+                    }, 1000);
+                } else {
+                    width += 2;
+                    fill.style.width = width + '%';
+                    
+                    if (width < 30) {
+                        text.innerHTML = "Bypass de segurança anti-cheat...";
+                    } else if (width < 60) {
+                        text.innerHTML = checkAim ? "Injetando calibração AimBot.js..." : "Pulando AimBot...";
+                    } else if (width < 90) {
+                        text.innerHTML = checkRecoil ? "Modificando multiplicador NoRecoil.cfg..." : "Pulando NoRecoil...";
+                    } else {
+                        text.innerHTML = "Limpando rastro de logs... Pronto!";
+                    }
+                }
+            }, 60);
+        }
+
         document.getElementById('password-field').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                verifyPassword();
-            }
+            if (e.key === 'Enter') verifyPassword();
         });
     </script>
 </body>
